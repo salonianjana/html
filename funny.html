@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>😂 Funny HTML Things</title>
+  <style>
+    :root { --gap: 14px; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
+      min-height: 100vh; display: grid; place-items: center; background: radial-gradient(circle at 30% 20%, #ffe9f3, #e8f3ff);
+    }
+    .card {
+      width: min(680px, 92vw); background: #fff; border-radius: 18px; padding: 24px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    p { margin: 0 0 16px; color: #333; }
+    hr { border: none; border-top: 1px dashed #ddd; margin: 18px 0; }
+
+    .arena {
+      position: relative; height: 260px; border: 2px dashed #bbb; border-radius: 14px; 
+      margin-top: 10px; overflow: hidden; background: repeating-linear-gradient(45deg, #fafafa, #fafafa 10px, #f6f6f6 10px, #f6f6f6 20px);
+    }
+    #runBtn {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      padding: 12px 18px; border: none; border-radius: 999px; font-weight: 700; cursor: pointer; 
+      background: #222; color: #fff; transition: transform .08s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,.15);
+    }
+    #runBtn:active { transform: translate(-50%, -50%) scale(.98); }
+    .tiny { font-size: 12px; color: #666; }
+
+    .eightball { display: grid; gap: var(--gap); }
+    .row { display: grid; grid-template-columns: 1fr auto; gap: var(--gap); }
+    input[type="text"] { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #ccc; }
+    button.primary { padding: 10px 16px; border: none; border-radius: 12px; background: #6c5ce7; color: #fff; font-weight: 700; cursor: pointer; }
+    .bubble {
+      margin-top: 6px; padding: 12px 14px; border-radius: 12px; background: #f4f0ff; border: 1px solid #e5dcff; 
+      min-height: 44px; display: grid; align-content: center; font-size: 18px;
+    }
+
+    .footer { text-align: center; margin-top: 12px; color: #888; font-size: 12px; }
+    .wiggle { animation: wiggle .1s ease 4; }
+    @keyframes wiggle { 50% { transform: translate(-50%, -50%) rotate(-3deg); } 100% { transform: translate(-50%, -50%) rotate(3deg); } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>😂 Two Funny Things in Plain HTML</h1>
+    <p>1) A button that <strong>runs away</strong> when you try to click it. 2) A silly <strong>Magic 8‑Ball</strong>.</p>
+
+    <h3>1) Catch the Button (if you can)</h3>
+    <div class="arena" id="arena" aria-label="play area">
+      <button id="runBtn" aria-label="runaway button">Click me!</button>
+    </div>
+    <p class="tiny">Tip: move the mouse slowly… it gets suspicious. 😉</p>
+
+    <hr />
+
+    <h3>2) Magic 8‑Ball (HTML Edition)</h3>
+    <div class="eightball">
+      <div class="row">
+        <input id="question" type="text" placeholder="Ask a yes/no question…" />
+        <button class="primary" id="ask">Ask 🎱</button>
+      </div>
+      <div class="bubble" id="answer">I sense… caffeine. Ask something!</div>
+    </div>
+
+    <div class="footer">Made with plain HTML/CSS/JS — no libraries, just vibes ✨</div>
+  </div>
+
+  <script>
+    // --- 1) Runaway Button ---
+    const arena = document.getElementById('arena');
+    const btn = document.getElementById('runBtn');
+    let paranoia = 0; // increases as you chase it
+
+    function moveButton(ev) {
+      const rect = arena.getBoundingClientRect();
+      const b = btn.getBoundingClientRect();
+      const mx = ev.clientX, my = ev.clientY;
+      const bx = b.left + b.width/2, by = b.top + b.height/2;
+      const dx = mx - bx, dy = my - by;
+      const dist = Math.hypot(dx, dy);
+
+      const dangerRadius = 140 + paranoia; // gets harder each time
+      if (dist < dangerRadius) {
+        // pick a new random safe spot
+        const pad = 10;
+        const nx = Math.random() * (rect.width - b.width - pad*2) + pad;
+        const ny = Math.random() * (rect.height - b.height - pad*2) + pad;
+        btn.style.left = nx + 'px';
+        btn.style.top  = ny + 'px';
+        btn.style.transform = 'translate(0,0)';
+        btn.classList.remove('wiggle');
+        void btn.offsetWidth; // restart animation
+        btn.classList.add('wiggle');
+        paranoia = Math.min(paranoia + 8, 220);
+      }
+    }
+
+    arena.addEventListener('mousemove', moveButton);
+    btn.addEventListener('click', () => {
+      btn.textContent = 'You got me! 🎉';
+      paranoia = 0;
+      setTimeout(() => btn.textContent = 'Click me!', 1200);
+    });
+
+    // --- 2) Magic 8‑Ball ---
+    const answers = [
+      'Yes, definitely 😎',
+      'Nope! 😂',
+      'Ask again later… 🕑',
+      'Python says: Probably 🐍',
+      'Better not tell you now 🤐',
+      'Absolutely not! 🚫',
+      '100% Yes 👍',
+      'I have no idea 🤯',
+      'Reply hazy, drink water 💧',
+      'Signs point to… snacks 🍪'
+    ];
+
+    const askBtn = document.getElementById('ask');
+    const q = document.getElementById('question');
+    const out = document.getElementById('answer');
+
+    function ask() {
+      const txt = q.value.trim();
+      if (!txt) { out.textContent = 'The 8‑Ball needs a question!'; return; }
+      out.textContent = 'Consulting the void…';
+      setTimeout(() => {
+        out.textContent = answers[Math.floor(Math.random() * answers.length)];
+      }, 500);
+    }
+
+    askBtn.addEventListener('click', ask);
+    q.addEventListener('keydown', (e) => { if (e.key === 'Enter') ask(); });
+  </script>
+</body>
+</html>
