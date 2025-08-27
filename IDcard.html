@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID Card</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #333;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    .id-card {
+      width: 300px;
+      background: #fff;
+      border: 3px solid #d4af37;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+    }
+    .header {
+      text-align: center;
+      padding: 2px;
+      background: #fff;
+    }
+    .header img {
+      width: 60px;
+      margin-bottom: 5px;
+    }
+    .header h2 {
+      font-size: 16px;
+      margin: 0;
+      font-weight: bold;
+    }
+    .header h3 {
+      font-size: 14px;
+      margin: 0;
+    }
+    .staff {
+      background: skyblue;
+      color: #000;
+      text-align: center;
+      font-weight: bold;
+      padding: 5px;
+    }
+    .photo-section {
+      text-align: center;
+      padding: 2px;
+    }
+    .photo-section img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border: 2px solid #000;
+    }
+    .photo-section p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .details {
+      background: skyblue;
+      color: #000;
+      padding: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .barcode-sign {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2px;
+      background: #fff;
+    }
+    .barcode {
+      width: 120px;
+      height: 40px;
+      background: repeating-linear-gradient(
+        to right,
+        black 0px,
+        black 2px,
+        white 2px,
+        white 4px
+      );
+    }
+    .signature {
+      font-size: 2px;
+      text-align: center;
+    }
+    .footer {
+      background: skyblue;
+      color: #000;
+      text-align: center;
+      font-size: 12px;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="id-card">
+    <!-- Header -->
+    <div class="header">
+      <img src="Poornima_University.png" alt="Logo">
+      <h2>Poornima University</h2>
+      <h3>Jaipur, Rajasthan</h3>
+    </div>
+
+    <!-- Staff -->
+    <div class="staff">STUDENT ID CARD</div>
+
+    <!-- Photo -->
+    <div class="photo-section">
+      <img src="saloni image.jpeg" alt="Photo">
+      <p>SALONI ANJANA</p>
+      <span>Student</span><br>
+      <small>28-03-2022</small>
+    </div>
+
+    <!-- Details -->
+    <div class="details">
+      <p><b>Father's Name:</b> Anil Anjana</p>
+      <p><b>Date of Birth:</b> 05/05/2006</p>
+      <p><b>Contact:</b> 9928044881</p>
+      <p><b>Address:</b> Chhoti Sadri, Pratapgarh (Raj.)</p>
+    </div>
+
+    <!-- Barcode and Sign -->
+    <div class="barcode-sign">
+      <div class="barcode"></div>
+      <div class="signature">
+        <img src="siggg.jpg" alt="Sign" width="50" height="20"><br>
+        <small>Signature</small>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      Poornima University, Jaipur, Rajasthan - 303905
+    </div>
+  </div>
+</body>
+</html>
